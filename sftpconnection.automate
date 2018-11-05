@@ -1,0 +1,13 @@
+
+tell application "Terminal"
+	set currentTab to do script ("
+	sshfspath='/Users/'$(echo $USER)'/sshfs-managers'
+	pkill -kill -f 'sshfs' && umount $sshfspath  
+	if [ ! -d $sshfspath ]; then 
+		mkdir $sshfspath
+	fi
+	echo 'password' | sshfs -o allow_other,defer_permissions -o reconnect -o compression=no -o ServerAliveInterval=15 username@1.1.1.1:/savehere/ $sshfspath -o password_stdin	 
+	 ")
+	delay 6
+	quit
+end tell
